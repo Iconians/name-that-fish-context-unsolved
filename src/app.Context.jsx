@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useContext, useState } from "react";
-import { Images } from "./src/assets/images";
+import { Images } from "./assets/images";
 
 const AppContext = createContext({});
 
@@ -26,24 +26,22 @@ const initialFishes = [
 export const AppProvider = ({ children }) => {
   const [inputValue, setInputValue] = useState("");
   const [fishArr, setFishArr] = useState(initialFishes);
-  const [inCorrect, setIncorrect] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [correctFish, SetCorrectFish] = useState(
-    fishArr.length ? fishArr[0].name : null
-  );
+  const [showInCorrectScore, setShowIncorrectScore] = useState(0);
+  const [showCorrectScore, setShowCorrectScore] = useState(0);
+
+  let currentCorrectFish = fishArr.length ? fishArr[0].name : null;
 
   const inputAnswer = () => {
-    if (correctFish === inputValue) {
-      const filter = fishArr.filter((fish) => fish.name !== inputValue);
+    const filter = fishArr.filter((fish) => fish.name !== currentCorrectFish);
+    if (currentCorrectFish === inputValue) {
       setFishArr(filter);
-      setCorrect(correct + 1);
-      SetCorrectFish(filter.length ? filter[0].name : null);
+      setShowCorrectScore(showCorrectScore + 1);
+      currentCorrectFish = filter.length ? filter[0].name : null;
       setInputValue("");
     } else {
-      const filter = fishArr.filter((fish) => fish.name !== correctFish);
       setFishArr(filter);
-      setIncorrect(inCorrect + 1);
-      SetCorrectFish(filter.length ? filter[0].name : null);
+      setShowIncorrectScore(showInCorrectScore + 1);
+      currentCorrectFish = filter.length ? filter[0].name : null;
       setInputValue("");
     }
   };
@@ -54,9 +52,8 @@ export const AppProvider = ({ children }) => {
         fishArr,
         inputAnswer,
         inputValue,
-        inCorrect,
-        correct,
-        correctFish,
+        showInCorrectScore,
+        showCorrectScore,
         initialFishes,
         setInputValue,
       }}
@@ -73,9 +70,8 @@ export const useAppContext = () => {
     inputAnswer: context.inputAnswer,
     setInputValue: context.setInputValue,
     inputValue: context.inputValue,
-    inCorrect: context.inCorrect,
-    correct: context.correct,
-    correctFish: context.correctFish,
+    showInCorrectScore: context.showInCorrectScore,
+    showCorrectScore: context.showCorrectScore,
     initialFishes: context.initialFishes,
   };
 };

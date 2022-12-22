@@ -1,6 +1,6 @@
 import "./styles/game-board.css";
 import React from "react";
-import { useAppContext } from "../../app.Context";
+import { useAppContext } from "../app.Context";
 
 // ! Do not add props to gameboard
 
