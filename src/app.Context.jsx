@@ -26,22 +26,18 @@ const initialFishes = [
 export const AppProvider = ({ children }) => {
   const [inputValue, setInputValue] = useState("");
   const [fishArr, setFishArr] = useState(initialFishes);
-  const [showInCorrectScore, setShowIncorrectScore] = useState(0);
-  const [showCorrectScore, setShowCorrectScore] = useState(0);
-
-  let currentCorrectFish = fishArr.length ? fishArr[0].name : null;
+  const [incorrectScore, setIncorrectScore] = useState(0);
+  const [correctScore, setCorrectScore] = useState(0);
 
   const inputAnswer = () => {
-    const filter = fishArr.filter((fish) => fish.name !== currentCorrectFish);
-    if (currentCorrectFish === inputValue) {
-      setFishArr(filter);
-      setShowCorrectScore(showCorrectScore + 1);
-      currentCorrectFish = filter.length ? filter[0].name : null;
+    const deleteFish = fishArr.filter((fish) => fish.name !== fishArr[0].name);
+    if (fishArr[0].name === inputValue) {
+      setFishArr(deleteFish);
+      setCorrectScore(correctScore + 1);
       setInputValue("");
     } else {
-      setFishArr(filter);
-      setShowIncorrectScore(showInCorrectScore + 1);
-      currentCorrectFish = filter.length ? filter[0].name : null;
+      setFishArr(deleteFish);
+      setIncorrectScore(incorrectScore + 1);
       setInputValue("");
     }
   };
@@ -52,8 +48,8 @@ export const AppProvider = ({ children }) => {
         fishArr,
         inputAnswer,
         inputValue,
-        showInCorrectScore,
-        showCorrectScore,
+        incorrectScore,
+        correctScore,
         initialFishes,
         setInputValue,
       }}
@@ -70,8 +66,8 @@ export const useAppContext = () => {
     inputAnswer: context.inputAnswer,
     setInputValue: context.setInputValue,
     inputValue: context.inputValue,
-    showInCorrectScore: context.showInCorrectScore,
-    showCorrectScore: context.showCorrectScore,
+    incorrectScore: context.incorrectScore,
+    correctScore: context.correctScore,
     initialFishes: context.initialFishes,
   };
 };

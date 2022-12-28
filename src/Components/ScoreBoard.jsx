@@ -6,10 +6,10 @@ import { useAppContext } from "../app.Context";
 // ! do not add props to scoreboard
 
 export const ScoreBoard = () => {
-  const { showCorrectScore, showInCorrectScore, fishArr } = useAppContext();
+  const { correctScore, incorrectScore, fishArr } = useAppContext();
   return (
     <div id="score-board">
-      <div>Incorrect 🔻: {showInCorrectScore}</div>
+      <div>Incorrect 🔻: {incorrectScore}</div>
       <div id="choices-left">
         {fishArr.map((answer) => (
           <div key={answer.name} className="choice">
@@ -17,7 +17,7 @@ export const ScoreBoard = () => {
           </div>
         ))}
       </div>
-      <div>Correct ✅: {showCorrectScore}</div>
+      <div>Correct ✅: {correctScore}</div>
     </div>
   );
 };
